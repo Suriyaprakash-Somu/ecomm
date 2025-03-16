@@ -5,6 +5,7 @@ import * as yup from "yup";
 import Input from "../../UI/Input";
 import { adminSignup } from "../../../api/dashboard/auth";
 import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router";
 
 const schema = yup.object().shape({
   user_name: yup.string().required("Name is required"),

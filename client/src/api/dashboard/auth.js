@@ -2,8 +2,6 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 export const adminSignup = async (data) => {
-  console.log(data);
-
   try {
     const response = await axios.post(
       `${import.meta.env.VITE_BACKEND_URL}/admin/signup`,
@@ -14,7 +12,6 @@ export const adminSignup = async (data) => {
         },
       }
     );
-    console.log(response.data);
 
     toast.success(response.data.message);
     return response.data;
@@ -25,8 +22,6 @@ export const adminSignup = async (data) => {
 };
 
 export const adminLogin = async (data) => {
-  console.log(data);
-
   try {
     const response = await axios.post(
       `${import.meta.env.VITE_BACKEND_URL}/admin/login`,
@@ -37,7 +32,6 @@ export const adminLogin = async (data) => {
         },
       }
     );
-    console.log(response.data);
 
     toast.success(response.data.message);
     return response.data;

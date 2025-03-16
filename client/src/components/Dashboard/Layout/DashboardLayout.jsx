@@ -37,7 +37,7 @@ const DashboardLayout = () => {
       <Sidebar>
         <Menu iconShape="square">
           <MenuItem onClick={() => navigate("/dashboard")}>Dashboard</MenuItem>
-          <MenuItem onClick={() => navigate("/dashboard/users")}>
+          <MenuItem onClick={() => navigate("/dashboard/users/manage")}>
             Users
           </MenuItem>
           <MenuItem onClick={() => navigate("/dashboard/settings")}>
