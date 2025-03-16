@@ -1,12 +1,37 @@
 import adminInstance from "../adminInstance";
 import toast from "react-hot-toast";
 
-export const getUsers = async ({ pageIndex, pageSize, sorting, filters }) => {
+export const addCategory = async (data) => {
+  try {
+    const response = await adminInstance.post(
+      `${import.meta.env.VITE_BACKEND_URL}/admin/category/add`,
+      data,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    toast.success(response.data.message);
+    return response.data;
+  } catch (error) {
+    toast.error(error.response.data.message);
+    throw error.response.data;
+  }
+};
+
+export const getCategories = async ({
+  pageIndex,
+  pageSize,
+  sorting,
+  filters,
+}) => {
   try {
     const response = await adminInstance.get(
       `${
         import.meta.env.VITE_BACKEND_URL
-      }/admin/users?pageIndex=${pageIndex}&pageSize=${pageSize}&filters=${JSON.stringify(
+      }/admin/categories?pageIndex=${pageIndex}&pageSize=${pageSize}&filters=${JSON.stringify(
         filters
       )}&sorting=${JSON.stringify(sorting)}`
     );
@@ -17,10 +42,10 @@ export const getUsers = async ({ pageIndex, pageSize, sorting, filters }) => {
   }
 };
 
-export const deleteUser = async (id) => {
+export const deleteCategory = async (id) => {
   try {
     const response = await adminInstance.delete(
-      `${import.meta.env.VITE_BACKEND_URL}/admin/user/delete`,
+      `${import.meta.env.VITE_BACKEND_URL}/admin/category/delete`,
       { data: { id } }
     );
     toast.success(response.data.message);
@@ -31,10 +56,10 @@ export const deleteUser = async (id) => {
   }
 };
 
-export const updateUser = async (data) => {
+export const updateCategory = async (data) => {
   try {
     const response = await adminInstance.patch(
-      `${import.meta.env.VITE_BACKEND_URL}/admin/user/update`,
+      `${import.meta.env.VITE_BACKEND_URL}/admin/category/update`,
       data,
       {
         headers: {

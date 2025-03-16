@@ -40,8 +40,8 @@ const DashboardLayout = () => {
           <MenuItem onClick={() => navigate("/dashboard/users/manage")}>
             Users
           </MenuItem>
-          <MenuItem onClick={() => navigate("/dashboard/settings")}>
-            Settings
+          <MenuItem onClick={() => navigate("/dashboard/category/manage")}>
+            Category
           </MenuItem>
         </Menu>
       </Sidebar>
