@@ -2,6 +2,7 @@ import express from "express";
 import CORS from "cors";
 import dotenv from "dotenv";
 import dbConnect from "./config/db.js";
+import Routes from "./routes/routes.js";
 
 dotenv.config();
 
@@ -16,7 +17,9 @@ app.use(
 );
 app.use(express.json());
 
-const PORT = process.env.PORT || 3000;
+app.use(Routes);
+
+const PORT = process.env.PORT || 4000;
 
 async function startServer() {
   try {
