@@ -179,7 +179,7 @@ const DataTable = ({
             ))}
           </div>
           <div className="custom-table-wrapper">
-            <div className="table table-responsive-md">
+            <div className="table-responsive-lg">
               <table className="table table-striped custom-table table-bordered">
                 <TableHeader table={table} />
                 <TableBody table={table} />

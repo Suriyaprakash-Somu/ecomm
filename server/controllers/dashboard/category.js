@@ -31,9 +31,64 @@ export const addCategory = async (req, res) => {
   }
 };
 
+// export const getCategories = async (req, res) => {
+//   try {
+//     const { pageIndex = 0, pageSize = 10, filters, sorting } = req.query;
+//     let parsedFilters = [];
+//     let parsedSorting = [];
+
+//     try {
+//       parsedFilters =
+//         filters && filters !== "undefined" ? JSON.parse(filters) : [];
+//       parsedSorting =
+//         sorting && sorting !== "undefined" ? JSON.parse(sorting) : [];
+//     } catch (error) {
+//       parsedFilters = [];
+//       parsedSorting = [];
+//     }
+
+//     let filterQuery = "";
+//     let filterValues = [];
+
+//     if (parsedFilters.length > 0) {
+//       parsedFilters.forEach((filter) => {
+//         filterQuery += ` AND ${filter.id} LIKE ?`;
+//         filterValues.push(`%${filter.value}%`);
+//       });
+//     }
+
+//     let sortQuery = "ORDER BY created_at DESC";
+//     if (parsedSorting.length > 0) {
+//       sortQuery = `ORDER BY ${parsedSorting
+//         .map((s) => `${s.id} ${s.desc ? "DESC" : "ASC"}`)
+//         .join(", ")}`;
+//     }
+
+//     const offset = Number(pageIndex) * Number(pageSize);
+
+//     const [categories] = await dbConnect.query(
+//       `SELECT category_id, category_id AS id, category_name, isActive FROM categories WHERE 1=1 ${filterQuery} ${sortQuery} LIMIT ? OFFSET ?`,
+//       [...filterValues, Number(pageSize), offset]
+//     );
+
+//     const [countResult] = await dbConnect.query(
+//       `SELECT COUNT(*) as total FROM categories WHERE 1=1 ${filterQuery}`,
+//       filterValues
+//     );
+
+//     res.status(200).json({
+//       rows: categories,
+//       rowCount: countResult[0].total,
+//     });
+//   } catch (error) {
+//     console.error("Error in getCategories:", error);
+//     res.status(500).json({ message: "Server error" });
+//   }
+// };
+
 export const getCategories = async (req, res) => {
   try {
-    const { pageIndex = 0, pageSize = 10, filters, sorting } = req.query;
+    const { pageIndex = 0, pageSize = 10, filters, sorting, all } = req.query;
     let parsedFilters = [];
     let parsedSorting = [];
 
@@ -64,12 +119,19 @@ export const getCategories = async (req, res) => {
         .join(", ")}`;
     }
 
-    const offset = Number(pageIndex) * Number(pageSize);
+    let query = `SELECT category_id, category_id AS id, category_name, isActive FROM categories WHERE 1=1 ${filterQuery} ${sortQuery}`;
+    let queryParams = [...filterValues];
 
-    const [categories] = await dbConnect.query(
-      `SELECT category_id, category_id AS id, category_name, isActive FROM categories WHERE 1=1 ${filterQuery} ${sortQuery} LIMIT ? OFFSET ?`,
-      [...filterValues, Number(pageSize), offset]
-    );
+    if (!all || all === "false") {
+      query += " LIMIT ? OFFSET ?";
+      queryParams.push(Number(pageSize), Number(pageIndex) * Number(pageSize));
+    }
+
+    const [categories] = await dbConnect.query(query, queryParams);
+
+    if (all && all === "true") {
+      return res.status(200).json({ rows: categories });
+    }
 
     const [countResult] = await dbConnect.query(
       `SELECT COUNT(*) as total FROM categories WHERE 1=1 ${filterQuery}`,

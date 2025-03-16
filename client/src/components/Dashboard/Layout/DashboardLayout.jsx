@@ -43,6 +43,9 @@ const DashboardLayout = () => {
           <MenuItem onClick={() => navigate("/dashboard/category/manage")}>
             Category
           </MenuItem>
+          <MenuItem onClick={() => navigate("/dashboard/product/manage")}>
+            Product
+          </MenuItem>
         </Menu>
       </Sidebar>
       <div style={{ flex: 1 }}>

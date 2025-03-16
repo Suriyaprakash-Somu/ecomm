@@ -75,3 +75,15 @@ export const updateCategory = async (data) => {
     throw error.response.data;
   }
 };
+
+export const getAllCategories = async () => {
+  try {
+    const response = await adminInstance.get(
+      `${import.meta.env.VITE_BACKEND_URL}/admin/categories?all=true`
+    );
+    return response.data;
+  } catch (error) {
+    toast.error(error.response.data.message);
+    throw error.response.data;
+  }
+};
