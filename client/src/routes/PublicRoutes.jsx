@@ -8,6 +8,8 @@ import Product from "../pages/Product";
 
 import Navbar from "../components/Public/Layout/Navbar";
 import Footer from "../components/Public/Layout/Footer";
+import About from "../pages/About";
+import Contact from "../pages/Contact";
 
 const PublicLayout = () => {
   return (
@@ -26,6 +28,8 @@ const PublicRoutes = () => (
     <Route element={<PublicLayout />}>
       <Route path="/" element={<Home />} />
       <Route path="/categories" element={<Category />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/contact" element={<Contact />} />
       <Route path="/products" element={<Product />} />
       <Route path="/admin/signup" element={<Signup />} />
       <Route path="/admin/login" element={<Login />} />

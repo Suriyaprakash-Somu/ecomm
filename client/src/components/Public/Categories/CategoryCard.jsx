@@ -1,19 +1,25 @@
 import React from "react";
+import styles from "./CategoryCard.module.css";
 
 const CategoryCard = ({ category }) => {
-    console.log(category);
-    
+  const getCategoryIcon = (categoryName) => {
+    const iconMap = {};
+
+    return (
+      iconMap[categoryName] || (
+        <div className={styles.categoryInitial}>{categoryName.charAt(0)}</div>
+      )
+    );
+  };
+
   return (
-    <div className="mb-3">
-      <div className="card p-3 text-center">
-        {/* Bootstrap placeholder image */}
-        <div className="placeholder-glow">
-          <span
-            className="placeholder"
-            style={{ height: "150px", display: "block" }}
-          ></span>
-        </div>
-        <h5 className="mt-3">{category.category_name}</h5>
+    <div className={styles.categoryCard}>
+      <div className={styles.iconWrapper}>
+        {getCategoryIcon(category.category_name)}
+      </div>
+      <h3 className={styles.categoryName}>{category.category_name}</h3>
+      <div className={styles.hoverOverlay}>
+        <button className={styles.exploreButton}>Explore</button>
       </div>
     </div>
   );

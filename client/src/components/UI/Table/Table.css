@@ -31,14 +31,15 @@
   }
   
   .table-action {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    justify-content: center;
+    /* display: flex; */
+    /* align-items: center; */
+    /* gap: 8px; */
+    /* justify-content: center; */
   }
   
   .icon {
     font-size: 18px;
+    margin-right: 5px;
     cursor: pointer;
   }
   

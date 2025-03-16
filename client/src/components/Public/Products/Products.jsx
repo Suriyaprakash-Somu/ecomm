@@ -3,7 +3,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { getCustomerProducts } from "../../../api/public/product";
 import ProductCard from "./ProductCard";
 
-const Products = () => {
+const Products = ({ page = "false" }) => {
   const lastElementRef = useRef(null);
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, error } =
@@ -27,7 +27,7 @@ const Products = () => {
   }, [data]);
 
   useEffect(() => {
-    if (!hasNextPage) return;
+    if (!hasNextPage || page === "home") return;
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -47,27 +47,32 @@ const Products = () => {
         observer.unobserve(lastElementRef.current);
       }
     };
-  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage, page]);
 
   if (error) {
     return <div>Error loading products</div>;
   }
 
+  const products = data?.pages.flatMap((page) => page.pages) || [];
+  const displayProducts = page === "home" ? products.slice(0, 4) : products;
+
   return (
     <div className="container mt-4">
-      <h1>Products</h1>
+      {page !== "home" && <h1>Products</h1>}
       <div className="row">
-        {data?.pages
-          .flatMap((page) => page.pages)
-          .map((product, index, array) => (
-            <div
-              key={product.product_id}
-              className="col-12 col-sm-6 col-md-4 col-lg-3 mb-3"
-              ref={index === array.length - 1 ? lastElementRef : null}
-            >
-              <ProductCard product={product} />
-            </div>
-          ))}
+        {displayProducts.map((product, index, array) => (
+          <div
+            key={product.product_id}
+            className="col-12 col-sm-6 col-md-4 col-lg-3 mb-3"
+            ref={
+              page !== "home" && index === array.length - 1
+                ? lastElementRef
+                : null
+            }
+          >
+            <ProductCard product={product} />
+          </div>
+        ))}
       </div>
 
       {isFetchingNextPage && <p>Loading more...</p>}

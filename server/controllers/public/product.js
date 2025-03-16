@@ -7,7 +7,7 @@ export const getCustomerProducts = async (req, res) => {
     const parsedPageSize = Number(pageSize);
 
     const [products] = await dbConnect.query(
-      `SELECT product_id, product_name, product_url, category_id, price, description, rating, image_url 
+      `SELECT product_id, product_name, product_url, category_id, price, description, rating,isFeatured, isRecent, image_url 
        FROM products 
        WHERE isActive = 1 
        ORDER BY created_at DESC 
