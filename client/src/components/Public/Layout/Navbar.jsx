@@ -2,10 +2,10 @@ import React from "react";
 import { Link } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import { logoutCustomer } from "../../../store/customerSlice";
-import { FaShoppingCart, FaSignOutAlt } from "react-icons/fa";
+import { FaShoppingCart, FaSignOutAlt, FaUser } from "react-icons/fa";
 
 const Navbar = () => {
-  const { customer, isAuthenticated } = useSelector((state) => state.customer);
+  const { isAuthenticated } = useSelector((state) => state.customer);
   const { totalQuantity } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
@@ -60,10 +60,10 @@ const Navbar = () => {
             <div className="d-lg-none mt-3 border-top pt-3">
               {isAuthenticated ? (
                 <>
-                  <li className="nav-item">
-                    <span className="nav-link text-primary">
-                      Hello, {customer && customer.customer_name}!
-                    </span>
+                  <li className="nav-item mb-2">
+                    <Link to="/profile" className="nav-link">
+                      <FaUser className="me-2" /> Profile
+                    </Link>
                   </li>
                   <li className="nav-item mb-2">
                     <Link to="/cart" className="nav-link">
@@ -115,13 +115,9 @@ const Navbar = () => {
           <div className="d-none d-lg-flex align-items-center">
             {isAuthenticated ? (
               <>
-                <span className="text-dark me-3">
-                  Hello,{" "}
-                  <span className="fw-bold text-primary">
-                    {customer && customer.customer_name}
-                  </span>
-                  !
-                </span>
+                <Link to="/profile" className="btn btn-outline-primary me-2">
+                  <FaUser className="me-1" /> Profile
+                </Link>
                 <button
                   className="btn btn-danger me-2"
                   onClick={() => dispatch(logoutCustomer())}

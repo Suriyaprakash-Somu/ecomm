@@ -23,7 +23,7 @@ export const customerMiddleware = async (req, res, next) => {
 
   try {
     const [customerResult] = await dbConnect.query(customerQuery, [
-      decoded.user_id,
+      decoded.customer_id,
     ]);
 
     if (!customerResult.length) {

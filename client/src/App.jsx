@@ -19,8 +19,6 @@ export const verifyCustomerToken = async (dispatch) => {
   try {
     const response = await customerInstance.post("/verify-token");
     if (response.status === 200) {
-      console.log(response.data);
-
       dispatch(setCustomer(response.data.decoded));
     }
   } catch (error) {

@@ -5,6 +5,7 @@ import DashboardLanding from "../components/Dashboard/LandingPage/DashboardLandi
 import ManageUser from "../components/Dashboard/User/ManageUser";
 import ManageCategory from "../components/Dashboard/Category/ManageCategory";
 import ManageProduct from "../components/Dashboard/Product/ManageProduct";
+import ManageOrder from "../components/Dashboard/Order/ManageOrder";
 
 const DashboardRoutes = () => (
   <Routes>
@@ -13,6 +14,7 @@ const DashboardRoutes = () => (
       <Route path="users/manage" element={<ManageUser />} />
       <Route path="category/manage" element={<ManageCategory />} />
       <Route path="product/manage" element={<ManageProduct />} />
+      <Route path="order/manage" element={<ManageOrder />} />
     </Route>
   </Routes>
 );

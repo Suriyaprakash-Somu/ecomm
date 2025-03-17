@@ -9,7 +9,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import TableHeader from "./TableHeader";
 import TableBody from "./TableBody";
 import TablePagination from "./TablePagination";
-import { FaTrashAlt, FaPlus, FaTimes } from "react-icons/fa";
+import { FaTrashAlt, FaPlus, FaTimes, FaEye } from "react-icons/fa";
 import { BsPencilSquare } from "react-icons/bs";
 import "./Table.css";
 
@@ -21,6 +21,7 @@ const DataTable = ({
   AddComponent = null,
   onDelete = false,
   EditComponent = null,
+  ViewComponent = null,
   columns,
   setColumns,
   filters,
@@ -80,6 +81,12 @@ const DataTable = ({
     setModalOpen(true);
   };
 
+  const handleViewClick = (row) => {
+    setSelectedRowData(row.original);
+    setModalType("view");
+    setModalOpen(true);
+  };
+
   const handleAddClick = () => {
     setSelectedRowData(null);
     setModalType("add");
@@ -87,12 +94,17 @@ const DataTable = ({
   };
 
   let actionsColumn = null;
-  if (onDelete || EditComponent) {
+  if (onDelete || EditComponent || ViewComponent) {
     actionsColumn = {
       header: "Action",
       id: "actions",
       cell: ({ row }) => (
         <div className="table-action">
+          {ViewComponent && (
+            <span className="icon viewIcon" title="View">
+              <FaEye onClick={() => handleViewClick(row)} />
+            </span>
+          )}
           {EditComponent && (
             <span className="icon editIcon" title="Edit">
               <BsPencilSquare onClick={() => handleEditClick(row)} />
@@ -202,6 +214,13 @@ const DataTable = ({
               <EditComponent
                 type="edit"
                 editData={selectedRowData}
+                onClose={() => setModalOpen(false)}
+              />
+            )}
+            {modalType === "view" && ViewComponent && (
+              <ViewComponent
+                type="view"
+                viewData={selectedRowData}
                 onClose={() => setModalOpen(false)}
               />
             )}

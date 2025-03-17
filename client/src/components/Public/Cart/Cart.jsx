@@ -4,10 +4,41 @@ import { clearCart } from "../../../store/cartSlice";
 import CartItem from "./CartItem";
 import styles from "./Cart.module.css";
 import { Link } from "react-router";
+import { useMutation } from "@tanstack/react-query";
+import { checkout } from "../../../api/public/cart";
+import toast from "react-hot-toast";
 
 const Cart = () => {
   const { cartItems, totalPrice } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
+
+  const checkoutMutation = useMutation({
+    mutationFn: checkout,
+    onSuccess: (data) => {
+      dispatch(clearCart());
+    },
+    onError: (error) => {
+      toast.error(error.message || "Failed to checkout.");
+    },
+  });
+
+  const handleCheckout = () => {
+    if (cartItems.length === 0) {
+      toast.error("Your cart is empty!");
+      return;
+    }
+
+    const orderData = {
+      items: cartItems.map((item) => ({
+        product_id: item.product_id,
+        quantity: item.quantity,
+        price: item.price,
+      })),
+      total_price: totalPrice,
+    };
+
+    checkoutMutation.mutate(orderData);
+  };
 
   return (
     <div className="container mt-4">
@@ -84,8 +115,14 @@ const Cart = () => {
                 </div>
               </div>
 
-              <button className={styles.checkoutBtn}>
-                Proceed to Checkout
+              <button
+                className={styles.checkoutBtn}
+                onClick={handleCheckout}
+                disabled={checkoutMutation.isLoading}
+              >
+                {checkoutMutation.isLoading
+                  ? "Processing..."
+                  : "Proceed to Checkout"}
               </button>
 
               <div className={styles.secureCheckout}>

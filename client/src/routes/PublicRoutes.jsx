@@ -13,6 +13,7 @@ import Contact from "../pages/Contact";
 import CustomerSignup from "../components/Public/Auth/CustomerSignup";
 import CustomerLogin from "../components/Public/Auth/CustomerLogin";
 import Cart from "../components/Public/Cart/Cart";
+import Profile from "../pages/Profile";
 
 const PublicLayout = () => {
   return (
@@ -32,6 +33,7 @@ const PublicRoutes = () => (
       <Route path="/" element={<Home />} />
       <Route path="/signup" element={<CustomerSignup />} />
       <Route path="/login" element={<CustomerLogin />} />
+      <Route path="/profile" element={<Profile />} />
       <Route path="/cart" element={<Cart />} />
       <Route path="/categories" element={<Category />} />
       <Route path="/about" element={<About />} />
