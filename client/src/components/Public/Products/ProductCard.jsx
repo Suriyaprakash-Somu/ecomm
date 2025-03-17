@@ -1,8 +1,16 @@
 import React from "react";
 import styles from "./ProductCard.module.css";
 import { FaHeart, FaCartPlus, FaStar } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../../store/cartSlice";
 
 const ProductCard = ({ product }) => {
+  const dispatch = useDispatch();
+
+  const handleAddToCart = () => {
+    dispatch(addToCart(product));
+  };
+
   return (
     <div className={styles.card}>
       <div className={styles.imageContainer}>
@@ -27,9 +35,6 @@ const ProductCard = ({ product }) => {
             ))}
           </div>
           <span className={styles.ratingValue}>{product.rating}</span>
-          {/* <span className={styles.reviewCount}>
-            ({product.review_count || 0})
-          </span> */}
         </div>
 
         <div className={styles.tags}>
@@ -47,7 +52,7 @@ const ProductCard = ({ product }) => {
         </div>
 
         <div className={styles.actionsRow}>
-          <button className={styles.addToCartBtn}>
+          <button className={styles.addToCartBtn} onClick={handleAddToCart}>
             <FaCartPlus />
             Add to cart
           </button>

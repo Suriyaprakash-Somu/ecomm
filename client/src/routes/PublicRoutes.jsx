@@ -10,6 +10,9 @@ import Navbar from "../components/Public/Layout/Navbar";
 import Footer from "../components/Public/Layout/Footer";
 import About from "../pages/About";
 import Contact from "../pages/Contact";
+import CustomerSignup from "../components/Public/Auth/CustomerSignup";
+import CustomerLogin from "../components/Public/Auth/CustomerLogin";
+import Cart from "../components/Public/Cart/Cart";
 
 const PublicLayout = () => {
   return (
@@ -27,6 +30,9 @@ const PublicRoutes = () => (
   <Routes>
     <Route element={<PublicLayout />}>
       <Route path="/" element={<Home />} />
+      <Route path="/signup" element={<CustomerSignup />} />
+      <Route path="/login" element={<CustomerLogin />} />
+      <Route path="/cart" element={<Cart />} />
       <Route path="/categories" element={<Category />} />
       <Route path="/about" element={<About />} />
       <Route path="/contact" element={<Contact />} />
